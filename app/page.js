@@ -3,12 +3,24 @@ import React,{ useState } from 'react'
 const page = () => {
   const [title,setTitle] = useState("")
   const [desc,setDesc] = useState("")
+  const [mainTask,setmainTask] = useState([])
   const submitHandler = (e) => {
     e.preventDefault()
+    setmainTask([...mainTask,{title,desc}])
     
     setTitle("")
     setDesc("")
   }
+  let renderTask = <h2>No task available.</h2>;
+
+  renderTask = mainTask.map((elem,index)=>{
+    return(
+      <li>
+      <h5>{elem.title}</h5>
+      <h6>{elem.desc}</h6>
+      </li>
+    )
+  })
   return(
     <div className='w-full h-screen bg-zinc-900 '>
       <div className='w-full h-[15vh] bg-zinc-800 flex items-center justify-center'>
@@ -38,9 +50,10 @@ const page = () => {
             </form>
         </div>
         <div className='w-full h-[75vh] '>
-          <div className='w-full h-20 bg-red-900 px-2 py-2 mb-4'>
-            <h1>No task</h1>
-            <h5>task</h5>
+          <div className='w-full min-h-20 bg-red-900 px-2 py-2 mb-4'>
+            <ul>
+              {renderTask}
+            </ul>
           </div>
         </div>
       </div>
